@@ -13,11 +13,6 @@ export const tanh: Activation = {
 	derivative: (y: number) => 1 - y * y
 };
 
-export const linear: Activation = {
-	func: (x: number) => x,
-	derivative: (_: number) => 1
-};
-
 export const relu: Activation = {
 	func: (x: number) => Math.max(0, x),
 	derivative: (y: number) => (y > 0 ? 1 : 0)

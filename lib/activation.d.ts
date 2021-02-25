@@ -4,6 +4,5 @@ export interface Activation {
 }
 export declare const sigmoid: Activation;
 export declare const tanh: Activation;
-export declare const linear: Activation;
 export declare const relu: Activation;
 //# sourceMappingURL=activation.d.ts.map

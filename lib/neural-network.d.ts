@@ -4,6 +4,8 @@ export default class NeuralNetwork {
     private lr;
     private data;
     private activation;
+    private inputLength;
+    private outputLength;
     constructor(sizes: number[], lr?: number, activation?: string);
     predict(inputs: number[]): number[];
     train(inputs: number[], targets: number[]): void;

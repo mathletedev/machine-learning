@@ -1,18 +1,32 @@
 import Matrix from "./matrix";
-import { Activation, sigmoid, tanh } from "./activation";
+import { Activation, relu, sigmoid, tanh } from "./activation";
 
+const ACTIVATIONS: Record<string, Activation> = {
+	relu,
+	sigmoid,
+	tanh
+};
 export default class NeuralNetwork {
 	private weights: Matrix[] = [];
 	private biases: Matrix[] = [];
 	private lr: number;
 	private data: Matrix[] = [];
 	private activation: Activation;
+	private inputLength: number;
+	private outputLength: number;
 
 	public constructor(
 		sizes: number[],
 		lr: number = 0.5,
 		activation: string = "sigmoid"
 	) {
+		if (sizes.length < 2) throw "Neural network must contain at least 2 layers";
+		if (!ACTIVATIONS[activation.toLowerCase()])
+			throw `Unknown activation function ${activation}`;
+
+		this.inputLength = sizes[0];
+		this.outputLength = sizes[sizes.length - 1];
+
 		sizes.forEach((size: number, i: number): void => {
 			if (i < sizes.length - 1)
 				this.weights.push(new Matrix(sizes[i + 1], size).randomize());
@@ -20,20 +34,13 @@ export default class NeuralNetwork {
 		});
 		this.lr = lr;
 
-		switch (activation) {
-			default:
-				this.activation = sigmoid;
-				break;
-			case "sigmoid":
-				this.activation = sigmoid;
-				break;
-			case "tanh":
-				this.activation = tanh;
-				break;
-		}
+		this.activation = ACTIVATIONS[activation.toLowerCase()];
 	}
 
 	public predict(inputs: number[]): number[] {
+		if (inputs.length !== this.inputLength)
+			throw `Neural network requires ${this.inputLength} inputs`;
+
 		this.data = [];
 		let curr: Matrix = Matrix.fromArray(inputs);
 		this.data.push(curr);
@@ -50,6 +57,9 @@ export default class NeuralNetwork {
 	}
 
 	public train(inputs: number[], targets: number[]): void {
+		if (targets.length !== this.outputLength)
+			throw `Neural network requires ${this.outputLength} targets`;
+
 		const outputs: Matrix = Matrix.fromArray(this.predict(inputs));
 
 		let currTargets: Matrix = Matrix.fromArray(targets);
