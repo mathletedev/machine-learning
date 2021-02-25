@@ -23,23 +23,27 @@ export default class NeuralNetwork {
 		switch (activation) {
 			default:
 				this.activation = sigmoid;
+				break;
 			case "sigmoid":
 				this.activation = sigmoid;
+				break;
 			case "tanh":
 				this.activation = tanh;
+				break;
 		}
 	}
 
 	public predict(inputs: number[]): number[] {
 		this.data = [];
 		let curr: Matrix = Matrix.fromArray(inputs);
+		this.data.push(curr);
 
 		for (let i: number = 0; i < this.weights.length; i++) {
 			curr = this.weights[i]
 				.dotMultiply(curr)
 				.addMatrix(this.biases[i])
 				.map(this.activation.func);
-			this.data.push(curr);
+			if (i < this.weights.length - 1) this.data.push(curr);
 		}
 
 		return curr.toArray();
@@ -54,15 +58,16 @@ export default class NeuralNetwork {
 
 		for (let i: number = this.weights.length - 1; i >= 0; i--) {
 			gradients = gradients.multiplyMatrix(errors).multiply(this.lr);
-			const layer: Matrix = this.data[this.weights.length - 1 - i].transpose();
-			let wDeltas: Matrix = gradients.dotMultiply(layer);
+			const layer: Matrix = this.data[i];
 
-			this.weights[i] = this.weights[i].addMatrix(wDeltas);
+			this.weights[i] = this.weights[i].addMatrix(
+				gradients.dotMultiply(layer.transpose())
+			);
 			this.biases[i] = this.biases[i].addMatrix(gradients);
 
 			currTargets = this.weights[i].transpose();
 			errors = currTargets.dotMultiply(errors);
-			gradients = layer.map(this.activation.derivative).transpose();
+			gradients = layer.map(this.activation.derivative);
 		}
 	}
 
