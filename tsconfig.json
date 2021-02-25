@@ -2,8 +2,12 @@
 	"compilerOptions": {
 		"target": "esnext",
 		"module": "commonjs",
-		"outDir": "dist",
+		"declaration": true,
+		"declarationMap": true,
+		"sourceMap": true,
+		"outDir": "lib",
 		"strict": true,
+		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true
 	},
 	"include": ["src"]
