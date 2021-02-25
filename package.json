@@ -1,0 +1,19 @@
+{
+	"name": "machine-learning",
+	"version": "1.0.0",
+	"description": "Boilerplate TypeScript machine learning code!",
+	"main": "dist/test.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/mathletedev/machine-learning.git"
+	},
+	"author": "mathletedev",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/mathletedev/machine-learning/issues"
+	},
+	"homepage": "https://github.com/mathletedev/machine-learning#readme"
+}
