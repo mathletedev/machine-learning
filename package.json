@@ -1,6 +1,6 @@
 {
 	"name": "ml-ts",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Boilerplate TypeScript machine learning code!",
 	"main": "lib/index.js",
 	"types": "lib",
@@ -12,7 +12,13 @@
 		"url": "git+https://github.com/mathletedev/machine-learning.git"
 	},
 	"author": "mathletedev",
-	"license": "ISC",
+	"keywords": [
+		"machine-learning",
+		"typescript",
+		"matrix",
+		"neural-networks"
+	],
+	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/mathletedev/machine-learning/issues"
 	},
