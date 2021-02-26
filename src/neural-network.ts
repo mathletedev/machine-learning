@@ -6,6 +6,7 @@ const ACTIVATIONS: Record<string, Activation> = {
 	sigmoid,
 	tanh
 };
+
 export default class NeuralNetwork {
 	private weights: Matrix[] = [];
 	private biases: Matrix[] = [];
@@ -32,8 +33,8 @@ export default class NeuralNetwork {
 				this.weights.push(new Matrix(sizes[i + 1], size).randomize());
 			if (i > 0) this.biases.push(new Matrix(size, 1).randomize());
 		});
-		this.lr = lr;
 
+		this.lr = lr;
 		this.activation = ACTIVATIONS[activation.toLowerCase()];
 	}
 
@@ -62,8 +63,7 @@ export default class NeuralNetwork {
 
 		const outputs: Matrix = Matrix.fromArray(this.predict(inputs));
 
-		let currTargets: Matrix = Matrix.fromArray(targets);
-		let errors: Matrix = currTargets.subtractMatrix(outputs);
+		let errors: Matrix = Matrix.fromArray(targets).subtractMatrix(outputs);
 		let gradients: Matrix = outputs.map(this.activation.derivative);
 
 		for (let i: number = this.weights.length - 1; i >= 0; i--) {
@@ -75,18 +75,8 @@ export default class NeuralNetwork {
 			);
 			this.biases[i] = this.biases[i].addMatrix(gradients);
 
-			currTargets = this.weights[i].transpose();
-			errors = currTargets.dotMultiply(errors);
+			errors = this.weights[i].transpose().dotMultiply(errors);
 			gradients = layer.map(this.activation.derivative);
 		}
-	}
-
-	public printData(): void {
-		console.log("Weights");
-		console.log("-".repeat(50));
-		this.weights.forEach((weight: Matrix) => weight.print());
-		console.log("Biases");
-		console.log("-".repeat(50));
-		this.biases.forEach((bias: Matrix) => bias.print());
 	}
 }

@@ -38,7 +38,7 @@ export default class Matrix {
 	public map(func: (val: number, row: number, col: number) => number): Matrix {
 		let matrix: Matrix = this.copy();
 
-		matrix.data = matrix.data.map((row: number[], i: number) =>
+		matrix.data = matrix.data.map((row: number[], i: number): number[] =>
 			row.map((val: number, j: number) => func(val, i, j))
 		);
 
