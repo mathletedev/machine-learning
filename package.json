@@ -1,6 +1,6 @@
 {
 	"name": "ml-ts",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "Boilerplate TypeScript machine learning code!",
 	"main": "lib/index.js",
 	"types": "lib",
