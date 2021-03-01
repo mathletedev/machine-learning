@@ -1,12 +1,13 @@
 export default class Matrix {
 	public rows: number;
 	public cols: number;
-	public data: number[][];
+	public data: number[][] = [];
 
 	public constructor(rows: number, cols: number) {
 		this.rows = rows;
 		this.cols = cols;
-		this.data = Array(this.rows).fill(Array(this.cols).fill(0));
+		for (let i = 0; i < this.rows; i++)
+			this.data.push(new Array(this.cols).fill(0));
 	}
 
 	public randomize(): Matrix {
